@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3 uid="uid://bxw582o0s1hti"]
+
+[ext_resource type="ArrayMesh" uid="uid://d153k8salmojc" path="res://Models/building-a.obj" id="1_83wrj"]
+[ext_resource type="ArrayMesh" uid="uid://c6q4i1douoefc" path="res://Models/model.obj" id="2_g33bx"]
+[ext_resource type="Script" uid="uid://de5m8wmsrn0hp" path="res://Scripts/Gen_more.gd" id="3_5euwg"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_83wrj"]
+size = Vector3(0.831177, 1.25378, 0.937256)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5euwg"]
+size = Vector3(4.74194, 0.120483, 3.34668)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g33bx"]
+size = Vector3(0.409958, 0.12085, 0.440804)
+
+[node name="Map Prefabs" type="Node3D"]
+
+[node name="Building" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.446668, 0, 0, 0, 1, 0, 0, 0, 0.446668, 0, -1.35584, 0)
+mesh = ExtResource("1_83wrj")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Building"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Building/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.022522, 0.65216, 0.00231934)
+shape = SubResource("BoxShape3D_83wrj")
+
+[node name="Model" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.00310106, 0, -0.0581722, 0, 0.135248, 0, 0.164955, 0, 0.0010936, -0.00296387, -0.0799894, -0.52625)
+mesh = ExtResource("2_g33bx")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Model"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Model/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0228264, -0.026062, -0.0688477)
+shape = SubResource("BoxShape3D_5euwg")
+
+[node name="Area3D" type="Area3D" parent="."]
+script = ExtResource("3_5euwg")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00919342, -0.00769044, 0.00465001)
+shape = SubResource("BoxShape3D_g33bx")
+
+[connection signal="body_entered" from="Area3D" to="Area3D" method="_on_body_entered"]
